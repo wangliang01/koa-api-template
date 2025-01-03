@@ -1,0 +1,130 @@
+@baseUrl = http://localhost:3000/api/v1
+
+
+
+### 注册
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "admin123",
+    "name": "admin",
+    "statusId": 1
+}
+
+### 登录 
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "admin123"
+}
+
+### 创建账号
+@token = Bearer {{login.response.body.data.token}}
+POST {{baseUrl}}/accounts
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "name": "测试用户",
+    "statusId": 1
+}
+
+### 获取账号列表
+GET {{baseUrl}}/accounts?page=1&pageSize=10
+Authorization: {{token}}
+
+### 获取账号列表（带搜索）
+GET {{baseUrl}}/accounts?page=1&pageSize=10&keyword=admin&statusId=1
+Authorization: {{token}}
+
+### 获取账号详情
+GET {{baseUrl}}/accounts/2
+Authorization: {{token}}
+
+### 更新账号
+PUT {{baseUrl}}/accounts/2
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "name": "更新后的用户名",
+    "statusId": 1
+}
+
+### 删除账号
+DELETE {{baseUrl}}/accounts/2
+Authorization: {{token}}
+
+### 更新最后登录时间
+PUT {{baseUrl}}/accounts/1/last-login
+Authorization: {{token}}
+
+### 分页查询账号
+POST {{baseUrl}}/accounts/pageable
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "page": 1,
+    "pageSize": 10,
+    "keyword": "admin",
+    "statusId": 1
+}
+
+### 分页查询账号（无查询条件）
+POST {{baseUrl}}/accounts/pageable
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "page": 1,
+    "pageSize": 10
+}
+
+### 创建账号
+POST {{baseUrl}}/accounts
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "123456",
+    "name": "测试账号",
+    "statusId": 1
+}
+
+### 获取账号列表
+GET {{baseUrl}}/accounts?page=1&pageSize=10
+Authorization: {{token}}
+
+### 获取账号列表（带搜索）
+GET {{baseUrl}}/accounts?page=1&pageSize=10&keyword=test&statusId=1
+Authorization: {{token}}
+
+### 获取账号详情
+GET {{baseUrl}}/accounts/1
+Authorization: {{token}}
+
+### 更新账号
+PUT {{baseUrl}}/accounts/1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "name": "更新后的账号名",
+    "statusId": 1
+}
+
+### 删除账号
+DELETE {{baseUrl}}/accounts/1
+Authorization: {{token}}
+
+### 更新最后登录时间
+PUT {{baseUrl}}/accounts/1/last-login
+Authorization: {{token}} 

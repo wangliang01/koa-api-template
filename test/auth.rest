@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:3000/api/v1
+
+### 注册
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "123456",
+    "name": "测试用户"
+}
+
+### 登录 
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "admin123"
+} 

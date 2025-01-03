@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # Node.js应用服务
+  # app:
+  #   build: .
+  #   container_name: KOA_GOLD_CONSOLE
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./logs:/app/logs
+  #     - ./uploads:/app/uploads
+  #   environment:
+  #     - NODE_ENV=production
+  #     - DB_HOST=mysql
+  #     - DB_PORT=3306
+  #     - DB_USER=root
+  #     - DB_PASSWORD=123456
+  #     - DB_NAME=KOA_GOLD_CONSOLE
+  #     - JWT_SECRET=KOA_GOLD_CONSOLE_SECRET_KEY
+  #     - JWT_EXPIRES_IN=24h
+  #   depends_on:
+  #     - mysql
+  #   networks:
+  #     - app-network
+
+  # MySQL服务
+  mysql:
+    image: mysql:8.0
+    container_name: KOA_GOLD_MYSQL
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - /c/Users/mike.wang.ext/docker/mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/00-init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=koa_gold_console
+      - MYSQL_USER=ADMIN
+      - MYSQL_PASSWORD=ADMIN123
+    command: --default-authentication-plugin=mysql_native_password
+            --character-set-server=utf8mb4
+            --collation-server=utf8mb4_unicode_ci
+            --init-connect='SET NAMES utf8mb4'
+            --explicit_defaults_for_timestamp=true
+            --max_connections=1000
+    networks:
+      - app-network
+
+  # Adminer数据库管理工具（可选）
+  # adminer:
+  #   image: adminer
+  #   container_name: KOA_GOLD_ADMINER
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - ADMINER_DEFAULT_SERVER=mysql
+  #   depends_on:
+  #     - mysql
+  #   networks:
+  #     - app-network
+
+# 网络配置
+networks:
+  app-network:
+    driver: bridge 
